@@ -66,6 +66,7 @@ export function Home() {
               placeholder="Digite o código da sala"
               onChange={(event) => setRoomCode(event.target.value)}
               value={roomCode}
+              autoFocus
             />
             <Button type="submit">Entrar na sala</Button>
           </form>
