@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { LogoImg, DeleteImg, CheckImg, AnswerImg } from "../assets/images";
-import { Button, MemoQuestion, RoomCode } from "../components";
+import { AnswerImg, CheckImg, DeleteImg, LogoImg } from "../assets/images";
+import { Button, MemoQuestion, RoomCode, SimpleModal } from "../components";
 import { useRoom } from "../hooks/useRoom";
 import { database } from "../services/firebase";
 import "../styles/room.scss";
@@ -12,6 +12,8 @@ type RoomParams = {
 
 export function AdminRoom() {
   // const { user } = useAuth();
+  const [openModalMessage, setOpenModalMessage] = useState(false);
+  const [openRoomMessage, setOpenRoomMessage] = useState(false);
   const params = useParams<RoomParams>();
   const history = useHistory();
 
@@ -20,9 +22,7 @@ export function AdminRoom() {
   const { title, questions } = useRoom(roomId);
 
   async function handleDeleteQuestion(questionId: string) {
-    if (window.confirm("Você tem certeza que deseja excluir essa pergunta?")) {
-      await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
-    }
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
   }
 
   async function handleEndRoom() {
@@ -52,9 +52,19 @@ export function AdminRoom() {
           <img src={LogoImg} alt="Letmeask" />
           <div>
             <RoomCode code={roomId} />
-            <Button isOutlined onClick={handleEndRoom}>
-              Encerrar sala
-            </Button>
+
+            <SimpleModal
+              openModal={openRoomMessage}
+              setOpenModal={setOpenRoomMessage}
+              title="Encerrar sala"
+              content="Tem certeza que você deseja encerrar esta sala?"
+              type="encerrar"
+              handleFunction={() => handleEndRoom()}
+            >
+              <Button isOutlined onClick={() => setOpenRoomMessage(true)}>
+                Encerrar sala
+              </Button>
+            </SimpleModal>
           </div>
         </div>
       </header>
@@ -92,14 +102,25 @@ export function AdminRoom() {
                     >
                       <img src={AnswerImg} alt="Dar destaque à pergunta" />
                     </button>
+                    <SimpleModal
+                      openModal={openModalMessage}
+                      setOpenModal={setOpenModalMessage}
+                      title="Excluir pergunta"
+                      content="Tem certeza que você deseja excluir esta pergunta?"
+                      type="excluir"
+                      handleFunction={() => handleDeleteQuestion(question.id)}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setOpenModalMessage(true);
+                        }}
+                      >
+                        <img src={DeleteImg} alt="Remover perguntar" />
+                      </button>
+                    </SimpleModal>
                   </>
                 )}
-                <button
-                  type="button"
-                  onClick={() => handleDeleteQuestion(question.id)}
-                >
-                  <img src={DeleteImg} alt="Remover perguntar" />
-                </button>
               </MemoQuestion>
             );
           })}
