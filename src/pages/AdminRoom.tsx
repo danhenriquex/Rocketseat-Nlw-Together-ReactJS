@@ -1,7 +1,13 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { LogoImg, DeleteImg, CheckImg, AnswerImg } from "../assets/images";
-import { Button, MemoQuestion, RoomCode } from "../components";
+import {
+  LogoImg,
+  DeleteImg,
+  CheckImg,
+  AnswerImg,
+  ExcludeMessageImg,
+} from "../assets/images";
+import { Button, MemoQuestion, Modal, RoomCode } from "../components";
 import { useRoom } from "../hooks/useRoom";
 import { database } from "../services/firebase";
 import "../styles/room.scss";
@@ -44,6 +50,17 @@ export function AdminRoom() {
       isHighlighted: true,
     });
   }
+
+  const handleModal = () => {
+    return (
+      <Modal
+        title="Excluir pergunta"
+        content="Tem certeza que você deseja excluir essa pergunta?"
+        buttonOption="Sim, excluir"
+        icon={ExcludeMessageImg}
+      />
+    );
+  };
 
   return (
     <div id="page-room">
@@ -94,10 +111,7 @@ export function AdminRoom() {
                     </button>
                   </>
                 )}
-                <button
-                  type="button"
-                  onClick={() => handleDeleteQuestion(question.id)}
-                >
+                <button type="button" onClick={handleModal}>
                   <img src={DeleteImg} alt="Remover perguntar" />
                 </button>
               </MemoQuestion>

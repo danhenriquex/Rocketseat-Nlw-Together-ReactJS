@@ -7,3 +7,5 @@ export { default as EmptyQuestionsImg } from "./empty-questions.svg";
 export { default as GoogleIconImg } from "./google-icon.svg";
 export { default as LikeImg } from "./like.svg";
 export { default as LogoImg } from "./logo.svg";
+export { default as DeleteMessageImg } from "./Icon - Excluir.svg";
+export { default as ExcludeMessageImg } from "./Interface, Essential-Delete, Disabled.svg";
