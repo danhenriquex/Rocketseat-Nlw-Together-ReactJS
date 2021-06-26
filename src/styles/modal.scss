@@ -1,11 +1,7 @@
 #container-modal {
   position: absolute;
-  // left: 0%;
-  // right: 0%;
-  // top: 0%;
-  // bottom: 0%;
-  left: 650px;
-  top: 224px;
+  left: 35%;
+  top: 25%;
   width: 590px;
   height: 362px;
   display: flex;
@@ -14,8 +10,6 @@
   flex-direction: column;
   background: #fff;
   border-radius: 8px;
-
-  // padding-bottom: 30px;
 
   .content {
     display: flex;
