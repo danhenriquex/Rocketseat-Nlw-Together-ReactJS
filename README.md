@@ -1,5 +1,7 @@
 ![Screenshot](Project.png)
 
+Adicione o arquivo `.env` com suas configurações do Firebase.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
